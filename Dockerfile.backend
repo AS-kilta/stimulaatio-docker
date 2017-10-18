@@ -7,7 +7,7 @@ WORKDIR /usr/src/api
 # Clone stuff from GitHub
 RUN apk update && apk add git
 RUN git clone https://github.com/Qaapu/stimulaatio-backend.git
-WORKDIR /usr/src/app/stimulaatio-backend
+WORKDIR /usr/src/api/stimulaatio-backend
 
 # Install api dependencies
 RUN pip install -r requirements.txt
