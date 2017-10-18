@@ -14,7 +14,8 @@ services:
     stimu-backend:
         build:
             context: .
-            dockerfile: Dockerfile.frontend
+            dockerfile: Dockerfile.backend
+        image: stimu-backend
         ports:
             - 5002:8000
         links:
