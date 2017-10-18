@@ -1,4 +1,4 @@
-FROM node:8.6.0-alpine
+FROM node:8.6.0-alpine as builder
 
 # Create app directory
 RUN mkdir -p /usr/src/app
@@ -19,5 +19,6 @@ RUN npm install -g serve
 # Copy files to build
 RUN cp src/files/* build
 
-# Run app
-CMD [ "serve", "-s", "build" ]
+
+FROM nginx
+COPY --from=builder /usr/src/app/stimulaatio-frontend/build/* /usr/share/nginx/html/
