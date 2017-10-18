@@ -4,12 +4,13 @@ FROM python:3
 RUN mkdir -p /usr/src/api
 WORKDIR /usr/src/api
 
-# Install api dependencies
-COPY requirements.txt /usr/src/api
-RUN pip install -r requirements.txt
+# Clone stuff from GitHub
+RUN apk update && apk add git
+RUN git clone https://github.com/Qaapu/stimulaatio-backend.git
+WORKDIR /usr/src/app/stimulaatio-backend
 
-# Bundle api source
-COPY . /usr/src/api
+# Install api dependencies
+RUN pip install -r requirements.txt
 
 # Run api
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
