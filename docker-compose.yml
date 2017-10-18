@@ -8,3 +8,15 @@ services:
         image: stimu-frontend
         ports:
             - 5001:5000
+
+    stimu-backend:
+        build: stimu-backend
+        ports:
+            - 5002:8000
+        links:
+            - stimu-db
+        environment:
+            - STIMU_DB=stimu-db
+
+    stimu-db:
+        image: postgres
