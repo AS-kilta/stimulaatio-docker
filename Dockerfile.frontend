@@ -12,16 +12,16 @@ WORKDIR /usr/src/app/stimulaatio-frontend
 # Install app dependencies
 RUN npm install
 
+# Use environmental variables from file
+COPY . /usr/src/app/stimulaatio-frontend
+RUN source .env.production.local
+
 # Create a production build
 RUN npm run build
 RUN npm install -g serve
 
 # Copy files to build
 RUN cp src/files/* build
-
-# Use environmental variables from file
-COPY .env.production.frontend /usr/src/app/stimulaatio-frontend
-RUN source .env.production.frontend
 
 # Run application
 CMD ["serve", "-s", "build"]
