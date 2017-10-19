@@ -20,8 +20,6 @@ services:
             - stimu-db
         depends_on:
             - migration
-        environment:
-            - STIMU_DB=stimu-db
         env_file:
             - .env.production.local
 
@@ -29,9 +27,12 @@ services:
         image: postgres
 
     migration:
+        build:
+            context: .
+            dockerfile: Dockerfile.backend
         image: stimu-backend
         command: python manage.py migrate --noinput
         depends_on:
             - stimu-db
-        environment:
-            - STIMU_DB=stimu-db
+        env_file:
+            - .env.production.local
