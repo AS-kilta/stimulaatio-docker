@@ -25,6 +25,8 @@ services:
 
     stimu-db:
         image: postgres
+        volumes:
+            - "dbdata:/var/lib/postgresql/data"
 
     migration:
         build:
@@ -36,3 +38,6 @@ services:
             - stimu-db
         env_file:
             - .env.production.local
+
+volumes:
+  dbdata:

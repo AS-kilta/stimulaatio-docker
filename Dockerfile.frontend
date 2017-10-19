@@ -9,6 +9,9 @@ RUN apk update && apk add git
 RUN git clone https://github.com/Qaapu/stimulaatio-frontend.git
 WORKDIR /usr/src/app/stimulaatio-frontend
 
+# Install app dependencies
+RUN npm install
+
 # Use environmental variables from file
 COPY . /usr/src/app/stimulaatio-frontend
 RUN source .env.production.local
