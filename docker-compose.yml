@@ -27,15 +27,6 @@ services:
         image: postgres
         volumes:
             - "dbdata:/var/lib/postgresql/data"
-
-    migration:
-        build:
-            context: .
-            dockerfile: Dockerfile.backend
-        image: stimu-backend
-        command: python manage.py migrate --noinput
-        depends_on:
-            - stimu-db
         env_file:
             - .env.production.local
 
