@@ -18,8 +18,6 @@ services:
             - 5002:8000
         links:
             - stimu-db
-        depends_on:
-            - migration
         env_file:
             - .env.production.local
 
