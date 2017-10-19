@@ -8,10 +8,6 @@ services:
         image: stimu-frontend
         ports:
             - 5001:5000
-        environment:
-            - REACT_APP_BACKEND=34.253.76.46:5002
-        volumes:
-            - build:/usr/src/app/stimulaatio-frontend/build
 
     stimu-backend:
         build:
@@ -22,8 +18,15 @@ services:
             - 5002:8000
         links:
             - stimu-db
+        depends_on:
+            - migration
+
         environment:
             - STIMU_DB=stimu-db
 
     stimu-db:
         image: postgres
+
+    migration:
+        image: stimu-backend
+        command: python manage.py migrate --noinput

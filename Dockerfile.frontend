@@ -18,3 +18,10 @@ RUN npm install -g serve
 
 # Copy files to build
 RUN cp src/files/* build
+
+# Use environmental variables from file
+COPY .env.production.frontend /usr/src/app/stimulaatio-frontend
+RUN source .env.production.frontend
+
+# Run application
+CMD ["serve", "-s", "build"]
