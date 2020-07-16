@@ -6,7 +6,7 @@ WORKDIR /usr/src/api
 
 # Clone stuff from GitHub
 RUN apt-get update && apt-get install -y git-all
-RUN git clone https://github.com/riikkano/stimulaatio-backend.git
+RUN git clone https://github.com/as-kilta/stimulaatio-backend.git
 WORKDIR /usr/src/api/stimulaatio-backend
 
 # Install api dependencies
