@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+    stimu-frontend:
+        build:
+            context: ../stimulaatio-frontend
+            dockerfile: Dockerfile
+        image: stimu-frontend
+        ports:
+            - 81:3000
+        env_file:
+            - .env.dev
+
+    stimu-backend:
+        build:
+            context: ../stimulaatio-backend
+            dockerfile: Dockerfile
+        image: stimu-backend
+        ports:
+            - 5002:8000
+        links:
+            - stimu-db
+        env_file:
+            - .env.dev
+
+    stimu-db:
+        image: postgres
+        volumes:
+            - "dbdata:/var/lib/postgresql/data"
+        env_file:
+            - .env.dev
+
+    caddy:
+        image: caddy
+        volumes:
+            - ./Caddyfile:/etc/caddy/Caddyfile
+            - ./caddy_data:/data
+
+        ports:
+            - 80:80
+            - 433:433
+        network_mode: host
+
+volumes:
+  dbdata:
+
