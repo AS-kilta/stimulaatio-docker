@@ -1,7 +1,12 @@
 
-localhost {
-  reverse_proxy * localhost:81
-  reverse_proxy /api/* localhost:5002
-  reverse_proxy /admin/* localhost:5002
+http://localhost:3000 {
+  reverse_proxy * stimu-frontend:3000
+  reverse_proxy /api/* stimu-backend:8000
+  reverse_proxy /admin/* stimu-backend:8000
 }
 
+http://localhost:3000/backend-static/* {
+  uri strip_prefix /backend-static
+  root * /django_static
+  file_server browse
+}

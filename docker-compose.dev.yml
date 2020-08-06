@@ -2,26 +2,25 @@ version: '3'
 
 services:
     stimu-frontend:
-        build:
-            context: ../stimulaatio-frontend
-            dockerfile: Dockerfile
-        image: stimu-frontend
-        ports:
-            - 81:3000
+        image: node:14.4.0-alpine
+        working_dir: /usr/src/app
+        command: sh -c "npm install && npm start"
         env_file:
             - .env.dev
+        volumes:
+            - "../stimulaatio-frontend:/usr/src/app"
 
     stimu-backend:
-        build:
-            context: ../stimulaatio-backend
-            dockerfile: Dockerfile
-        image: stimu-backend
-        ports:
-            - 5002:8000
-        links:
-            - stimu-db
+        image: python:3
+        working_dir: /usr/src/app
+        command: sh -c "pip install -r requirements.txt && python manage.py runserver 0.0.0.0:8000"
+        volumes:
+            - "../stimulaatio-backend:/usr/src/app"
+            - "admin_static:/usr/src/api/static"
         env_file:
             - .env.dev
+        environment:
+            - DJANGO_DEBUG=1
 
     stimu-db:
         image: postgres
@@ -33,14 +32,14 @@ services:
     caddy:
         image: caddy
         volumes:
-            - ./Caddyfile:/etc/caddy/Caddyfile
-            - ./caddy_data:/data
-
+            - "./Caddyfile:/etc/caddy/Caddyfile"
+            - "./caddy_data:/data"
+            - "admin_static:/django_static"
         ports:
             - 80:80
             - 433:433
-        network_mode: host
+            - 3000:3000
 
 volumes:
   dbdata:
-
+  admin_static:
